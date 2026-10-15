@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://cvp7jdgdbylpj"]
+
+[ext_resource type="Script" uid="uid://bylis3a575j55" path="res://Scripts/MainMenu/main_menu.gd" id="1_cdkru"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g7b7a"]
+font_size = 69
+
+[node name="MainMenu" type="Control" unique_id=531823972]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cdkru")
+
+[node name="Panel" type="Panel" parent="." unique_id=1054323162]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2033576647]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.5
+offset_right = 192.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 31
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=2018532528]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+text = "VexKnuckle"
+label_settings = SubResource("LabelSettings_g7b7a")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2121095987]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1867217839]
+layout_mode = 2
+text = "Name :-"
+
+[node name="NameLineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=164953367]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "YourName"
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1682485345]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=562659825]
+layout_mode = 2
+text = "Ip Address :-"
+
+[node name="IpLineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer2" unique_id=959221823]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "127.0.0.1"
+alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer" unique_id=2011895673]
+layout_mode = 2
+
+[node name="HostBtn" type="Button" parent="VBoxContainer/HBoxContainer3" unique_id=2130886159]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Host"
+
+[node name="JoinBtn" type="Button" parent="VBoxContainer/HBoxContainer3" unique_id=829034787]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/HostBtn" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/JoinBtn" to="." method="_on_join_pressed"]

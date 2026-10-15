@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cjvyf6kjf7bmp"]
+
+[ext_resource type="PackedScene" uid="uid://bxwc2p4oy3mk0" path="res://Scenes/MainGame/Map.tscn" id="1_3463d"]
+[ext_resource type="Script" uid="uid://b18k37la362wu" path="res://Scripts/MainGame/main_game.gd" id="1_gcriw"]
+
+[node name="MainGame" type="Node" unique_id=1831557559]
+script = ExtResource("1_gcriw")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=806989108]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+
+[node name="Map" parent="." unique_id=196347776 instance=ExtResource("1_3463d")]
+
+[node name="Players" type="Node" parent="." unique_id=335024639]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Players" unique_id=1439739339]
+_spawnable_scenes = PackedStringArray("uid://di2rdg0e1pv8n")
+spawn_path = NodePath("..")

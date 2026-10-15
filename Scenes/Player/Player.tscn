@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://di2rdg0e1pv8n"]
+
+[ext_resource type="Script" uid="uid://du2a3ach1rod4" path="res://Scripts/Components/ComponentsManeger.gd" id="1_s0eop"]
+[ext_resource type="Script" uid="uid://b6wn211v53jko" path="res://addons/virtual_joystick_DX/vjdx_core_script.gd" id="2_ft8w5"]
+[ext_resource type="Script" uid="uid://dl4b5xtugp6l4" path="res://Scripts/Components/PlayerMovementComponent.gd" id="2_h54ih"]
+[ext_resource type="Script" uid="uid://cprtel3misa8d" path="res://Scripts/Components/MultiplayerCameraSyncComponent.gd" id="3_ude3g"]
+[ext_resource type="Script" uid="uid://8d5yvdayiggp" path="res://Scripts/Components/MultiplayerNodeSyncComponent.gd" id="4_jmcll"]
+[ext_resource type="Texture2D" uid="uid://csnm6lj0a2xuv" path="res://icon.svg" id="6_4wape"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g7b7a"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g7b7a"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_h54ih"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("MeshInstance3D:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" unique_id=1336033051]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2018048203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_g7b7a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=574500238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_g7b7a")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1924369118]
+transform = Transform3D(1, 0, 0, 0, 0.98873705, 0.14966337, 0, -0.14966337, 0.98873705, 0, 6.29527, 7.8438)
+
+[node name="ComponentsManeger" type="Node" parent="." unique_id=1990770568 node_paths=PackedStringArray("player")]
+script = ExtResource("1_s0eop")
+player = NodePath("..")
+metadata/_custom_type_script = "uid://du2a3ach1rod4"
+
+[node name="PlayerMovenentComponent" type="Node" parent="ComponentsManeger" unique_id=1620825408 node_paths=PackedStringArray("player")]
+script = ExtResource("2_h54ih")
+multiplayer_authority_check = true
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://dl4b5xtugp6l4"
+
+[node name="MultiplayerCameraSyncComponent" type="Node" parent="ComponentsManeger" unique_id=1388096073 node_paths=PackedStringArray("camera", "player")]
+script = ExtResource("3_ude3g")
+camera = NodePath("../../Camera3D")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://cprtel3misa8d"
+
+[node name="MultiplayerNodeSyncComponent" type="Node" parent="ComponentsManeger" unique_id=315649772 node_paths=PackedStringArray("player", "nodes")]
+script = ExtResource("4_jmcll")
+player = NodePath("../..")
+nodes = [NodePath("../../Ui")]
+metadata/_custom_type_script = "uid://8d5yvdayiggp"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=233118883]
+replication_config = SubResource("SceneReplicationConfig_h54ih")
+
+[node name="Ui" type="Control" parent="." unique_id=1484403353]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VirtualJoystickDX" type="Control" parent="Ui" unique_id=1767489857]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 152.0
+offset_top = -264.0
+offset_right = 352.0
+offset_bottom = -64.0
+grow_vertical = 0
+pivot_offset = Vector2(100, 100)
+mouse_filter = 2
+script = ExtResource("2_ft8w5")
+use_active_region = false
+"Colors - D-Pad" = null
+"Textures - D-Pad" = null
+Cardinals = null
+Diagonals = null
+metadata/_custom_type_script = "uid://b6wn211v53jko"
+
+[node name="Jump" type="Control" parent="Ui" unique_id=902470613]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -287.0
+offset_top = -216.0
+offset_right = -159.0
+offset_bottom = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Ui/Jump" unique_id=872789957]
+texture_normal = ExtResource("6_4wape")
+texture_pressed = ExtResource("6_4wape")
+action = "ui_accept"
