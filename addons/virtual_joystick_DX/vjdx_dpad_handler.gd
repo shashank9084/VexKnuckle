@@ -9,24 +9,25 @@ var deadzone: float = 0.15
 var use_textures: bool = true
 var preset: int = 0
 
-var tex_idle: Texture2D
-var tex_up: Texture2D
-var tex_down: Texture2D
-var tex_left: Texture2D
-var tex_right: Texture2D
-var tex_up_right: Texture2D
-var tex_up_left: Texture2D
-var tex_down_right: Texture2D
-var tex_down_left: Texture2D
+# Nivel de movimiento actual (VJDXJoystickHandler.MovementLevel). Lo escribe el core.
+var movement_level: int = VJDXJoystickHandler.MovementLevel.IDLE
+
+# Texturas personalizadas: 25 slots (idle + 3 niveles x 8 direcciones).
+# Indice 0 = idle. Indice = nivel * 8 + octante, con nivel 0..2 (walk, run, sprint)
+# y octante 1..8 (up, down, left, right, up_right, up_left, down_right, down_left).
+const LEVEL_NAMES: Array[String] = ["walk", "run", "sprint"]
+const DIR_NAMES: Array[String] = ["up", "down", "left", "right", "up_right", "up_left", "down_right", "down_left"]
+const TEX_COUNT: int = 25
+
+var custom_tex: Array[Texture2D] = []
 
 var active_direction: Vector2 = Vector2.ZERO
 
 var _preset_cache: Array[Texture2D] = []
 var _preset_cache_dirty: bool = true
 
-const _PRESET_FILES: Array[String] = [
-	"idle", "up", "down", "left", "right", "up_right", "up_left", "down_right", "down_left"
-]
+func _init() -> void:
+	custom_tex.resize(TEX_COUNT)
 
 func calculate_value(offset: Vector2, dist: float) -> Vector2:
 	var dz_px: float = deadzone * radius
@@ -62,14 +63,22 @@ func mark_cache_dirty() -> void:
 
 func load_preset_cache() -> void:
 	_preset_cache.clear()
+	_preset_cache.resize(TEX_COUNT)
 	var folder: String = "res://addons/virtual_joystick_DX/Dpad textures/preset 1/" if preset == 0 else "res://addons/virtual_joystick_DX/Dpad textures/preset 2/"
-	for f in _PRESET_FILES:
-		var path: String = folder + f + ".svg"
-		if ResourceLoader.exists(path):
-			_preset_cache.append(load(path) as Texture2D)
-		else:
-			_preset_cache.append(null)
+	_preset_cache[0] = _load_tex(folder + "idle.svg")
+	for l in LEVEL_NAMES.size():
+		for d in DIR_NAMES.size():
+			# Si existe "<nivel>_<dir>.svg" (ej. run_up_left.svg) se usa; si no,
+			# se usa el "<dir>.svg" comun a todos los niveles.
+			var level_path: String = folder + "%s_%s.svg" % [LEVEL_NAMES[l], DIR_NAMES[d]]
+			var path: String = level_path if ResourceLoader.exists(level_path) else folder + DIR_NAMES[d] + ".svg"
+			_preset_cache[l * 8 + d + 1] = _load_tex(path)
 	_preset_cache_dirty = false
+
+func _load_tex(path: String) -> Texture2D:
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	return null
 
 func get_octant_index() -> int:
 	var pos_x: float = active_direction.x
@@ -84,25 +93,24 @@ func get_octant_index() -> int:
 	if pos_x > 0: return 4
 	return 0
 
-func get_custom_texture(idx: int) -> Texture2D:
-	match idx:
-		0: return tex_idle
-		1: return tex_up
-		2: return tex_down
-		3: return tex_left
-		4: return tex_right
-		5: return tex_up_right
-		6: return tex_up_left
-		7: return tex_down_right
-		8: return tex_down_left
-	return null
+# Slot (0..24) de la textura segun nivel actual + direccion actual.
+func get_texture_index() -> int:
+	var octant: int = get_octant_index()
+	if octant == 0 or movement_level == VJDXJoystickHandler.MovementLevel.IDLE:
+		return 0
+	var level_idx: int = clampi(movement_level - 1, 0, LEVEL_NAMES.size() - 1)
+	return level_idx * 8 + octant
+
+func set_custom_texture(idx: int, tex: Texture2D) -> void:
+	if idx >= 0 and idx < TEX_COUNT:
+		custom_tex[idx] = tex
 
 func get_active_texture() -> Texture2D:
 	if not use_textures:
 		return null
 
-	var idx: int = get_octant_index()
-	var custom: Texture2D = get_custom_texture(idx)
+	var idx: int = get_texture_index()
+	var custom: Texture2D = custom_tex[idx]
 	if custom:
 		return custom
 

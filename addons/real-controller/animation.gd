@@ -1,5 +1,8 @@
 extends Node
 
+
+@export var multiplayer_authority_check = false
+
 @export var animation_tree: AnimationTree
 @onready var playback = animation_tree.get("parameters/playback")
 @export var player: CharacterBody3D

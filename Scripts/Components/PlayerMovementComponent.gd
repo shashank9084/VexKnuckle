@@ -3,16 +3,12 @@ class_name PlayerMovenentComponent
 
 @export var multiplayer_authority_check = false
 
-enum CameraMode {
-	FIRST_PERSON,
-	THIRD_PERSON
-}
 
 @export_group("References")
 @export var player: CharacterBody3D
+@export var character: Node3D
 @export var camera_pivot: Node3D
 @export var spring_arm: SpringArm3D
-@export var character: Node3D
 
 @export_group("Movement")
 @export var speed: float = 5.0
@@ -21,12 +17,6 @@ enum CameraMode {
 @export var jump_velocity: float = 4.5
 @export var can_walk: bool = true
 
-@export_group("Camera")
-@export var camera_mode: CameraMode = CameraMode.THIRD_PERSON
-@export var camera_distance: float = 3.5
-@export var mouse_sensitivity: float = 0.005
-@export var tilt_limit: float = deg_to_rad(75.0)
-@export var rotation_speed: float = 10.0
 
 var input_dir := Vector2.ZERO
 var direction := Vector3.ZERO
@@ -48,13 +38,6 @@ func _physics_process(delta: float) -> void:
 
 	_handle_gravity(delta)
 	_handle_input()
-
-	if camera_mode == CameraMode.THIRD_PERSON and character:
-		character.rotation.y = lerp_angle(
-			character.rotation.y,
-			camera_pivot.rotation.y + PI,
-			rotation_speed * delta
-		)
 
 	_apply_movement()
 	player.move_and_slide()
@@ -78,6 +61,8 @@ func _handle_input() -> void:
 	direction = (
 		camera_basis * Vector3(input_dir.x, 0, input_dir.y)
 	).normalized()
+
+
 
 func _apply_movement() -> void:
 	var moving := input_dir != Vector2.ZERO

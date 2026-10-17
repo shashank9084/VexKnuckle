@@ -153,6 +153,7 @@ func _refresh_editor_state() -> void:
 @export_custom(PROPERTY_HINT_INPUT_NAME, "show_builtin, loose_mode") var action_down: StringName = "ui_down"
 
 @export_category("Movement Levels")
+@export_custom(PROPERTY_HINT_INPUT_NAME, "show_builtin, loose_mode") var action_walk: StringName = "walk"
 @export_custom(PROPERTY_HINT_INPUT_NAME, "show_builtin, loose_mode") var action_run: StringName = "run"
 @export_custom(PROPERTY_HINT_INPUT_NAME, "show_builtin, loose_mode") var action_sprint: StringName = "sprint"
 
@@ -252,27 +253,61 @@ var active_region: Rect2:
 			dpad.mark_cache_dirty()
 		queue_redraw()
 @export var tex_dpad_idle: Texture2D:
-	set(v): tex_dpad_idle = v; if dpad: dpad.tex_idle = v; queue_redraw()
+	set(v): tex_dpad_idle = v; _set_dpad_tex(0, v)
 
-@export_subgroup("Cardinals")
-@export var tex_dpad_up: Texture2D:
-	set(v): tex_dpad_up = v; if dpad: dpad.tex_up = v; queue_redraw()
-@export var tex_dpad_down: Texture2D:
-	set(v): tex_dpad_down = v; if dpad: dpad.tex_down = v; queue_redraw()
-@export var tex_dpad_left: Texture2D:
-	set(v): tex_dpad_left = v; if dpad: dpad.tex_left = v; queue_redraw()
-@export var tex_dpad_right: Texture2D:
-	set(v): tex_dpad_right = v; if dpad: dpad.tex_right = v; queue_redraw()
+@export_subgroup("Walk")
+@export var tex_dpad_walk_up: Texture2D:
+	set(v): tex_dpad_walk_up = v; _set_dpad_tex(1, v)
+@export var tex_dpad_walk_down: Texture2D:
+	set(v): tex_dpad_walk_down = v; _set_dpad_tex(2, v)
+@export var tex_dpad_walk_left: Texture2D:
+	set(v): tex_dpad_walk_left = v; _set_dpad_tex(3, v)
+@export var tex_dpad_walk_right: Texture2D:
+	set(v): tex_dpad_walk_right = v; _set_dpad_tex(4, v)
+@export var tex_dpad_walk_up_right: Texture2D:
+	set(v): tex_dpad_walk_up_right = v; _set_dpad_tex(5, v)
+@export var tex_dpad_walk_up_left: Texture2D:
+	set(v): tex_dpad_walk_up_left = v; _set_dpad_tex(6, v)
+@export var tex_dpad_walk_down_right: Texture2D:
+	set(v): tex_dpad_walk_down_right = v; _set_dpad_tex(7, v)
+@export var tex_dpad_walk_down_left: Texture2D:
+	set(v): tex_dpad_walk_down_left = v; _set_dpad_tex(8, v)
 
-@export_subgroup("Diagonals")
-@export var tex_dpad_up_right: Texture2D:
-	set(v): tex_dpad_up_right = v; if dpad: dpad.tex_up_right = v; queue_redraw()
-@export var tex_dpad_up_left: Texture2D:
-	set(v): tex_dpad_up_left = v; if dpad: dpad.tex_up_left = v; queue_redraw()
-@export var tex_dpad_down_right: Texture2D:
-	set(v): tex_dpad_down_right = v; if dpad: dpad.tex_down_right = v; queue_redraw()
-@export var tex_dpad_down_left: Texture2D:
-	set(v): tex_dpad_down_left = v; if dpad: dpad.tex_down_left = v; queue_redraw()
+@export_subgroup("Run")
+@export var tex_dpad_run_up: Texture2D:
+	set(v): tex_dpad_run_up = v; _set_dpad_tex(9, v)
+@export var tex_dpad_run_down: Texture2D:
+	set(v): tex_dpad_run_down = v; _set_dpad_tex(10, v)
+@export var tex_dpad_run_left: Texture2D:
+	set(v): tex_dpad_run_left = v; _set_dpad_tex(11, v)
+@export var tex_dpad_run_right: Texture2D:
+	set(v): tex_dpad_run_right = v; _set_dpad_tex(12, v)
+@export var tex_dpad_run_up_right: Texture2D:
+	set(v): tex_dpad_run_up_right = v; _set_dpad_tex(13, v)
+@export var tex_dpad_run_up_left: Texture2D:
+	set(v): tex_dpad_run_up_left = v; _set_dpad_tex(14, v)
+@export var tex_dpad_run_down_right: Texture2D:
+	set(v): tex_dpad_run_down_right = v; _set_dpad_tex(15, v)
+@export var tex_dpad_run_down_left: Texture2D:
+	set(v): tex_dpad_run_down_left = v; _set_dpad_tex(16, v)
+
+@export_subgroup("Sprint")
+@export var tex_dpad_sprint_up: Texture2D:
+	set(v): tex_dpad_sprint_up = v; _set_dpad_tex(17, v)
+@export var tex_dpad_sprint_down: Texture2D:
+	set(v): tex_dpad_sprint_down = v; _set_dpad_tex(18, v)
+@export var tex_dpad_sprint_left: Texture2D:
+	set(v): tex_dpad_sprint_left = v; _set_dpad_tex(19, v)
+@export var tex_dpad_sprint_right: Texture2D:
+	set(v): tex_dpad_sprint_right = v; _set_dpad_tex(20, v)
+@export var tex_dpad_sprint_up_right: Texture2D:
+	set(v): tex_dpad_sprint_up_right = v; _set_dpad_tex(21, v)
+@export var tex_dpad_sprint_up_left: Texture2D:
+	set(v): tex_dpad_sprint_up_left = v; _set_dpad_tex(22, v)
+@export var tex_dpad_sprint_down_right: Texture2D:
+	set(v): tex_dpad_sprint_down_right = v; _set_dpad_tex(23, v)
+@export var tex_dpad_sprint_down_left: Texture2D:
+	set(v): tex_dpad_sprint_down_left = v; _set_dpad_tex(24, v)
 
 # Estado Interno
 var value: Vector2 = Vector2.ZERO
@@ -314,15 +349,11 @@ func _sync_properties_to_handlers() -> void:
 	dpad.deadzone = deadzone
 	dpad.use_textures = dpad_use_textures
 	dpad.preset = int(dpad_preset)
-	dpad.tex_idle = tex_dpad_idle
-	dpad.tex_up = tex_dpad_up
-	dpad.tex_down = tex_dpad_down
-	dpad.tex_left = tex_dpad_left
-	dpad.tex_right = tex_dpad_right
-	dpad.tex_up_right = tex_dpad_up_right
-	dpad.tex_up_left = tex_dpad_up_left
-	dpad.tex_down_right = tex_dpad_down_right
-	dpad.tex_down_left = tex_dpad_down_left
+	dpad.set_custom_texture(0, tex_dpad_idle)
+	for l in VJDXDpadHandler.LEVEL_NAMES.size():
+		for d in VJDXDpadHandler.DIR_NAMES.size():
+			var prop: String = "tex_dpad_%s_%s" % [VJDXDpadHandler.LEVEL_NAMES[l], VJDXDpadHandler.DIR_NAMES[d]]
+			dpad.set_custom_texture(l * 8 + d + 1, get(prop) as Texture2D)
 	dpad.mark_cache_dirty()
 
 	region.enabled = use_active_region
@@ -489,11 +520,17 @@ func _update_stick(screen_pos: Vector2) -> void:
 	joystick_moved.emit(value)
 	queue_redraw()
 
+func _set_dpad_tex(idx: int, tex: Texture2D) -> void:
+	if dpad:
+		dpad.set_custom_texture(idx, tex)
+	queue_redraw()
+
 # Nuevo: actualiza el nivel de movimiento actual y emite la señal solo si cambia
 func _set_movement_level(level: int) -> void:
 	if level == current_movement_level:
 		return
 	current_movement_level = level
+	dpad.movement_level = level
 	movement_level_changed.emit(level)
 
 func _do_release() -> void:
@@ -542,13 +579,20 @@ func _apply_axis(val: float, neg_action: StringName, pos_action: StringName) -> 
 
 func _apply_movement_level_actions() -> void:
 	match current_movement_level:
+		VJDXJoystickHandler.MovementLevel.WALK:
+			Input.action_release(action_run)
+			Input.action_release(action_sprint)
+			Input.action_press(action_walk)
 		VJDXJoystickHandler.MovementLevel.RUN:
+			Input.action_release(action_walk)
 			Input.action_release(action_sprint)
 			Input.action_press(action_run)
 		VJDXJoystickHandler.MovementLevel.SPRINT:
+			Input.action_release(action_walk)
 			Input.action_release(action_run)
 			Input.action_press(action_sprint)
 		_:
+			Input.action_release(action_walk)
 			Input.action_release(action_run)
 			Input.action_release(action_sprint)
 
@@ -562,6 +606,7 @@ func _reset_actions() -> void:
 	Input.action_release(action_right)
 	Input.action_release(action_up)
 	Input.action_release(action_down)
+	Input.action_release(action_walk)
 	Input.action_release(action_run)
 	Input.action_release(action_sprint)
 	_set_movement_level(VJDXJoystickHandler.MovementLevel.IDLE)
@@ -621,6 +666,10 @@ func _validate_property(property: Dictionary) -> void:
 	var is_joystick: bool = (controller_style == ControllerStyle.JOYSTICK)
 	var is_movable: bool = joystick.is_movable()
 	var vp: Vector2 = _get_viewport_size()
+	if property.name == "tex_dpad_idle" or property.name in ["Walk", "Run", "Sprint"] or property.name.begins_with("tex_dpad_"):
+		if is_joystick or not dpad_use_textures:
+			property.usage = PROPERTY_USAGE_NO_EDITOR
+		return
 	match property.name:
 		# Nuevo: pivot_offset se gestiona en codigo, se oculta para evitar confusion
 		"pivot_offset":
@@ -649,11 +698,6 @@ func _validate_property(property: Dictionary) -> void:
 			if is_joystick:
 				property.usage = PROPERTY_USAGE_NO_EDITOR
 		"dpad_preset":
-			if is_joystick or not dpad_use_textures:
-				property.usage = PROPERTY_USAGE_NO_EDITOR
-		"tex_dpad_idle",\
-		"Cardinals", "tex_dpad_up", "tex_dpad_down", "tex_dpad_left", "tex_dpad_right",\
-		"Diagonals", "tex_dpad_up_right", "tex_dpad_up_left", "tex_dpad_down_right", "tex_dpad_down_left":
 			if is_joystick or not dpad_use_textures:
 				property.usage = PROPERTY_USAGE_NO_EDITOR
 		"debug_show_region":
