@@ -1,5 +1,5 @@
 extends Node
-class_name PlayerMovenentComponent
+class_name PlayerMovementComponent
 
 @export var multiplayer_authority_check = false
 
@@ -13,9 +13,9 @@ class_name PlayerMovenentComponent
 @export_group("Movement")
 @export var speed: float = 5.0
 @export var walk_speed: float = 2.5
+@export var run_speed : float = 4.0
 @export var sprint_speed: float = 8.0
 @export var jump_velocity: float = 4.5
-@export var can_walk: bool = true
 
 
 var input_dir := Vector2.ZERO
@@ -23,6 +23,7 @@ var direction := Vector3.ZERO
 var input_strength := 0.0
 var frozen := false
 
+var is_running : bool = false
 var is_sprinting: bool = false
 var is_walking: bool = false
 var is_jumping: bool = false
@@ -71,7 +72,9 @@ func _apply_movement() -> void:
 
 	if moving and Input.is_action_pressed("sprint"):
 		current_speed = sprint_speed
-	elif moving and Input.is_action_pressed("walk") and can_walk:
+	elif moving and Input.is_action_pressed("run"):
+		current_speed = run_speed
+	elif moving and Input.is_action_pressed("walk"):
 		current_speed = walk_speed
 
 	player.velocity.x = direction.x * current_speed * input_strength
