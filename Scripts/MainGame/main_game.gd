@@ -11,9 +11,19 @@ func _ready() -> void:
 	for p in NetworkManeger.players:
 		_spawn_player(p)
 	NetworkManeger.spawn_player.connect(_spawn_player)
+	NetworkManeger.despawn_player.connect(
+		func(id):
+		_despawn_player(id)
+		)
 
 func _configure_spawner() -> void:
 	_spawner.spawn_function = Callable(self,"_spawn_func")
+	
+@rpc("authority", "call_local", "reliable")
+func _despawn_player(id: int) -> void:
+	var node := %Players.get_node_or_null(str(id))
+	if node:
+		node.queue_free()
 	
 func _spawn_player(peer_id: int) -> void:
 	if not multiplayer.is_server():

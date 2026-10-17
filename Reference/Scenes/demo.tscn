@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dsodmitnj7046"]
+
+[ext_resource type="Script" uid="uid://b6wn211v53jko" path="res://addons/virtual_joystick_DX/vjdx_core_script.gd" id="1_gjqng"]
+
+[node name="Demo" type="Node" unique_id=1729701375]
+
+[node name="Control" type="Control" parent="." unique_id=33904514]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VirtualJoystickDX" type="Control" parent="Control" unique_id=1034141272]
+custom_minimum_size = Vector2(160, 160)
+anchors_preset = 0
+offset_left = 62.0
+offset_top = 144.0
+offset_right = 222.0
+offset_bottom = 304.0
+pivot_offset = Vector2(80, 80)
+mouse_filter = 2
+script = ExtResource("1_gjqng")
+controller_style = 1
+haptic_dpad_press_duration = 124
+haptic_dpad_press_amplitude = 1.0
+haptic_dpad_release_duration = 40
+haptic_dpad_release_amplitude = 1.0
+haptic_dpad_change_duration = 62
+haptic_dpad_change_amplitude = 1.0
+"Joystick Mode" = null
+use_active_region = false
+"Colors - Joystick" = null
+"Textures - Joystick" = null
+metadata/_custom_type_script = "uid://b6wn211v53jko"

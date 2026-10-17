@@ -8,22 +8,34 @@
 
 config_version=5
 
+[accessibility]
+
+general/accessibility_support=1
+
 [application]
 
 config/name="VexKnuckle"
 config/tags=PackedStringArray("pending....")
 run/main_scene="uid://cvp7jdgdbylpj"
 config/features=PackedStringArray("4.7", "Forward Plus")
+run/low_processor_mode=true
 config/icon="res://icon.svg"
 
 [autoload]
 
 NetworkManeger="*uid://dgi2u40fx7bnb"
+DebugMenu="uid://c4fuh0bx4424w"
 
 [display]
 
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/mode=3
+window/frame_pacing/android/enable_frame_pacing=false
+window/frame_pacing/android/swappy_mode=0
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+window/dpi/allow_hidpi=false
 
 [editor_plugins]
 
@@ -32,6 +44,14 @@ enabled=PackedStringArray("res://addons/virtual_joystick_DX/plugin.cfg")
 [input]
 
 sprint={
+"deadzone": 0.2,
+"events": []
+}
+walk={
+"deadzone": 0.2,
+"events": []
+}
+jump={
 "deadzone": 0.2,
 "events": []
 }
@@ -47,3 +67,5 @@ run={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

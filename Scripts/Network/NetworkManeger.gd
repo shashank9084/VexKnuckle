@@ -1,12 +1,13 @@
 extends Node
 
-signal server_created
-signal game_started
-signal spawn_player(id: int)
+signal despawn_player(id : int)
+signal spawn_player(id : int)
+signal players_list_changed(_players : Dictionary)
 
 const GAME_PORT        : int    = 7777
 const MAX_PLAYERS      : int    = 8
 const GAME_SCENE_PATH  : String = "res://Scenes/MainGame/MainGame.tscn"
+const MAINMENU_SCENE_PATH  : String = "res://Scenes/MainMenu/MainMenu.tscn"
 
 var peer : ENetMultiplayerPeer = null
 
@@ -14,7 +15,7 @@ var local_info    : Dictionary = {}
 var players       : Dictionary = {}
 
 var main_menu_scene
-var game_menu_scene
+var main_game_scene
 
 func _ready() -> void:
 	_bind_multiplayer_signals()
@@ -27,10 +28,10 @@ func host(player_name : String) -> Error:
 		return err
 
 	multiplayer.multiplayer_peer = peer
-	local_info = _make_player_info(player_name, 1)
+	local_info = _make_player_info(player_name)
 	players[1] = local_info
-	server_created.emit()
-	_rpc_load_main_game_scene()
+	players_list_changed.emit(players)
+	load_main_game_scene()
 	return OK
 	
 func join(ip: String, player_name: String) -> Error:
@@ -41,8 +42,7 @@ func join(ip: String, player_name: String) -> Error:
 		return err
 
 	multiplayer.multiplayer_peer = peer
-	local_info = _make_player_info(player_name, 0)
-	_rpc_load_main_game_scene()
+	local_info = _make_player_info(player_name)
 	return OK
 
 
@@ -54,37 +54,97 @@ func _bind_multiplayer_signals() -> void:
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 	
 func _on_connected_to_server() -> void:
+	var id : int = multiplayer.get_unique_id()
+	load_main_game_scene()
+	_add_player(id ,local_info)
+	rpc_register_player.rpc_id(1 , local_info)
 	printt("Connected to Server Successfully")
 	
 func _on_connection_failed() -> void:
 	printt("Failed to Join Server")
 	
 func _on_server_disconnected() -> void:
+	players.clear()
+	players_list_changed.emit({})
+	local_info = {}
+	if peer == null:
+		return
+	peer.close()
+	peer = null
+	load_main_menu_scene()
 	printt("Server Disconnected")
 	
 func _on_peer_connected(id : int) -> void:
 	printt("Peer Connected :" , id)
-	if multiplayer.is_server():
-		#_rpc_load_main_game_scene.rpc_id(id)
-		#await get_tree().create_timer(10).timeout
-		spawn_player.emit(id)
 	
 func _on_peer_disconnected(id : int) -> void:
+	_remove_player(id)
 	printt("Peer Disconnected :" , id)
 
+func _add_player(id : int , info : Dictionary):
+	players[id] = info
+	if multiplayer.is_server():
+		spawn_player.emit(id)
+	players_list_changed.emit(players)
 
-func _make_player_info(player_name : String, id : int) -> Dictionary:
+func _remove_player(id : int):
+	players.erase(id)
+	if multiplayer.is_server():
+		despawn_player.emit(id)
+	players_list_changed.emit(players)
+	
+func _make_player_info(player_name : String) -> Dictionary:
 	return {
-		"id"    : id,
 		"name"  : player_name
 	}
-	
 
-@rpc("authority", "reliable")
-func _rpc_load_main_game_scene() -> void:
-	game_started.emit()
+
+@rpc("any_peer", "reliable")
+func rpc_register_player(info: Dictionary) -> void:
+	var sender := multiplayer.get_remote_sender_id()
+	_add_player(sender , info)
+	if multiplayer.is_server():
+		for existing_id in players:
+			if existing_id != sender:
+				rpc_register_player.rpc_id(sender, players[existing_id])
+		for peer_id in multiplayer.get_peers():
+			if peer_id != sender:
+				rpc_register_player.rpc_id(peer_id, info)
+				
+func load_main_menu_scene() -> void:
+	main_game_scene = get_tree().get_current_scene()
+	main_menu_scene = load(MAINMENU_SCENE_PATH).instantiate()
+	get_tree().root.add_child(main_menu_scene)
+	main_game_scene.process_mode = Node.PROCESS_MODE_DISABLED
+	main_game_scene.queue_free()
+	get_tree().current_scene = main_menu_scene
+
+func load_main_game_scene() -> void:
 	main_menu_scene = get_tree().get_current_scene()
-	game_menu_scene = load(GAME_SCENE_PATH).instantiate()
-	get_tree().root.add_child(game_menu_scene)
+	main_game_scene = load(GAME_SCENE_PATH).instantiate()
+	get_tree().root.add_child(main_game_scene)
 	main_menu_scene.process_mode = Node.PROCESS_MODE_DISABLED
-	main_menu_scene.visible = false
+	main_menu_scene.queue_free()
+	main_menu_scene = null
+	get_tree().current_scene = main_game_scene
+
+
+func close_server() -> void:
+	players.clear()
+	players_list_changed.emit({})
+	if peer == null:
+		return
+	peer.close()
+	peer = null
+	local_info = {}
+	load_main_menu_scene()
+	
+func leave_server() -> void:
+	players.clear()
+	players_list_changed.emit({})
+	if peer == null:
+		return
+	peer.close()
+	peer = null
+	local_info = {}
+	load_main_menu_scene()

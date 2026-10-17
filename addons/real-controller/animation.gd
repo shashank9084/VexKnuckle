@@ -1,19 +1,19 @@
 extends Node
 
-@onready var animation_tree: AnimationTree = $"../AnimationTree"
+@export var animation_tree: AnimationTree
 @onready var playback = animation_tree.get("parameters/playback")
-@onready var player: CharacterBody3D = $".."
+@export var player: CharacterBody3D
+@export var player_movement_component : PlayerMovenentComponent
 
-var target_direction: Vector2 = Vector2.ZERO
-
+	
 func _process(delta: float) -> void:
-	if player == null or animation_tree == null:
+	if player == null or animation_tree == null or player_movement_component == null:
 		return
 
-	var is_sprinting = player.is_sprinting
-	var is_walking = player.is_walking
+	var is_sprinting = player_movement_component.is_sprinting
+	var is_walking = player_movement_component.is_walking
 
-	var target_blend = Vector2(player.input_dir.x, -player.input_dir.y)
+	var target_blend = Vector2(player_movement_component.input_dir.x, -player_movement_component.input_dir.y)
 
 	# Update blend positions for all movement types
 	var current_walk = animation_tree.get("parameters/Locomotion/WalkBlend/blend_position")
@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 	var smooth_walk_run = lerp(current_walk_run, target_walk_run, delta * 8.0)
 	animation_tree.set("parameters/Locomotion/WalkRunBlend/blend_amount", smooth_walk_run)
 
-	var is_moving_backward = player.input_dir.y > 0
+	var is_moving_backward = player_movement_component.input_dir.y > 0
 	var target_speed = 1.0 if (is_sprinting and not is_moving_backward) else 0.0
 	var current_speed = animation_tree.get("parameters/Locomotion/SpeedBlend/blend_amount")
 	var smooth_speed = lerp(current_speed, target_speed, delta * 8.0)

@@ -1,34 +1,93 @@
 extends Node
 class_name PlayerMovenentComponent
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
-
 @export var multiplayer_authority_check = false
-@export var player : CharacterBody3D
 
-func  _ready() -> void:
-	if !player:
-		assert(false , "Player Not Found")
-		
+enum CameraMode {
+	FIRST_PERSON,
+	THIRD_PERSON
+}
+
+@export_group("References")
+@export var player: CharacterBody3D
+@export var camera_pivot: Node3D
+@export var spring_arm: SpringArm3D
+@export var character: Node3D
+
+@export_group("Movement")
+@export var speed: float = 5.0
+@export var walk_speed: float = 2.5
+@export var sprint_speed: float = 8.0
+@export var jump_velocity: float = 4.5
+@export var can_walk: bool = true
+
+@export_group("Camera")
+@export var camera_mode: CameraMode = CameraMode.THIRD_PERSON
+@export var camera_distance: float = 3.5
+@export var mouse_sensitivity: float = 0.005
+@export var tilt_limit: float = deg_to_rad(75.0)
+@export var rotation_speed: float = 10.0
+
+var input_dir := Vector2.ZERO
+var direction := Vector3.ZERO
+var input_strength := 0.0
+var frozen := false
+
+var is_sprinting: bool = false
+var is_walking: bool = false
+var is_jumping: bool = false
+
+func _ready() -> void:
+	if not player:
+		player = get_parent() as CharacterBody3D
+	assert(player != null, "PlayerControllerComponent requires a CharacterBody3D.")
+
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	if not player or frozen:
+		return
+
+	_handle_gravity(delta)
+	_handle_input()
+
+	if camera_mode == CameraMode.THIRD_PERSON and character:
+		character.rotation.y = lerp_angle(
+			character.rotation.y,
+			camera_pivot.rotation.y + PI,
+			rotation_speed * delta
+		)
+
+	_apply_movement()
+	player.move_and_slide()
+
+func _handle_gravity(delta: float) -> void:
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and player.is_on_floor():
-		player.velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_pressed("jump") and player.is_on_floor():
+		player.velocity.y = jump_velocity
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		player.velocity.x = direction.x * SPEED
-		player.velocity.z = direction.z * SPEED
-	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, SPEED)
-		player.velocity.z = move_toward(player.velocity.z, 0, SPEED)
+func _handle_input() -> void:
+	input_dir = Input.get_vector(
+		"ui_left", "ui_right",
+		"ui_up", "ui_down"
+	)
 
-	player.move_and_slide()
+	input_strength = minf(input_dir.length(), 1.0)
+
+	var camera_basis := Basis(Vector3.UP, camera_pivot.rotation.y)
+	direction = (
+		camera_basis * Vector3(input_dir.x, 0, input_dir.y)
+	).normalized()
+
+func _apply_movement() -> void:
+	var moving := input_dir != Vector2.ZERO
+
+	var current_speed := speed
+
+	if moving and Input.is_action_pressed("sprint"):
+		current_speed = sprint_speed
+	elif moving and Input.is_action_pressed("walk") and can_walk:
+		current_speed = walk_speed
+
+	player.velocity.x = direction.x * current_speed * input_strength
+	player.velocity.z = direction.z * current_speed * input_strength
