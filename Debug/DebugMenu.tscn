@@ -35,7 +35,7 @@ action_label = NodePath("MarginContainer/HFlowContainer/InputAction")
 player_property_label = NodePath("MarginContainer/HFlowContainer/PlayerProperties")
 fps_label = NodePath("MarginContainer/HFlowContainer/FPS")
 online_players_label = NodePath("MarginContainer/HFlowContainer/OnlinePlayers")
-player_properties = Array[String](["is_running"])
+player_properties = Array[String](["is_running", "is_walking", "is_sprinting"])
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=984865100]
 layout_mode = 1

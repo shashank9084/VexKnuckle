@@ -70,12 +70,27 @@ func _apply_movement() -> void:
 
 	var current_speed := speed
 
-	if moving and Input.is_action_pressed("sprint"):
+	if moving and Input.is_action_pressed("sprint") and  input_dir.y < 0.6:
 		current_speed = sprint_speed
-	elif moving and Input.is_action_pressed("run"):
+		is_sprinting = true
+		is_running = false
+		is_walking = false
+	elif moving and Input.is_action_pressed("run") or input_dir.y > 0.6 and not Input.is_action_pressed("run"):
 		current_speed = run_speed
+		is_sprinting = false
+		is_running = true
+		is_walking = false
 	elif moving and Input.is_action_pressed("walk"):
 		current_speed = walk_speed
+		is_sprinting = false
+		is_running = false
+		is_walking = true
+	if !moving:
+		is_sprinting = false
+		is_running = false
+		is_walking = false
 
 	player.velocity.x = direction.x * current_speed * input_strength
 	player.velocity.z = direction.z * current_speed * input_strength
+	
+	

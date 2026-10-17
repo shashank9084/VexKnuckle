@@ -78,7 +78,7 @@ func _update_player_properties_states() -> void:
 
 	var changed := false
 	for property in player_properties:
-		var boolen = player.get(str(property))
+		var boolen = player.get(property)
 		if boolen == null: return
 		if _player_properties_states[property] != boolen:
 			_player_properties_states[property] = boolen
@@ -86,7 +86,6 @@ func _update_player_properties_states() -> void:
 
 	if changed:
 		_refresh_player_property_label()
-		print(player_properties)
 
 func _update_action_states() -> void:
 	if not is_instance_valid(action_label):
