@@ -1,0 +1,10 @@
+[gd_resource type="AnimationLibrary" format=3 uid="uid://ce6lwk5huinfl"]
+
+[ext_resource type="Animation" path="res://Assets/Animations/Jump.tres" id="1_d4255"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunForward.tres" id="2_mdm4v"]
+
+[resource]
+_data = {
+&"Jump": ExtResource("1_d4255"),
+&"RunForward": ExtResource("2_mdm4v")
+}

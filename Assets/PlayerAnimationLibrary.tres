@@ -1,0 +1,134 @@
+[gd_resource type="AnimationLibrary" format=3]
+
+[ext_resource type="Animation" path="res://Assets/Animations/Activate.tres" id="1_ujzde"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackKickL1.tres" id="2_8gxd6"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackKickR1.tres" id="3_ncf10"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackL1.tres" id="4_epf91"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackL2.tres" id="5_dhodz"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackL3.tres" id="6_doc9i"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackR1.tres" id="7_s0j8h"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackR2.tres" id="8_t9lgm"]
+[ext_resource type="Animation" path="res://Assets/Animations/AttackR3.tres" id="9_xg9ed"]
+[ext_resource type="Animation" path="res://Assets/Animations/Block.tres" id="10_n581u"]
+[ext_resource type="Animation" path="res://Assets/Animations/BlockBreak1.tres" id="11_33xtp"]
+[ext_resource type="Animation" path="res://Assets/Animations/BlockGetHit1.tres" id="12_lpft7"]
+[ext_resource type="Animation" path="res://Assets/Animations/BlockGetHit2.tres" id="13_5v2se"]
+[ext_resource type="Animation" path="res://Assets/Animations/Boost1.tres" id="14_h60kv"]
+[ext_resource type="Animation" path="res://Assets/Animations/Death1.tres" id="15_j50ce"]
+[ext_resource type="Animation" path="res://Assets/Animations/DiveRollForward1.tres" id="16_9uvw5"]
+[ext_resource type="Animation" path="res://Assets/Animations/DodgeBackward.tres" id="17_3efr4"]
+[ext_resource type="Animation" path="res://Assets/Animations/DodgeLeft.tres" id="18_edt2s"]
+[ext_resource type="Animation" path="res://Assets/Animations/DodgeRight.tres" id="19_ywb3w"]
+[ext_resource type="Animation" path="res://Assets/Animations/Fall.tres" id="20_kh5dn"]
+[ext_resource type="Animation" path="res://Assets/Animations/GetHitB1.tres" id="21_sipzz"]
+[ext_resource type="Animation" path="res://Assets/Animations/GetHitF1.tres" id="22_5fk2z"]
+[ext_resource type="Animation" path="res://Assets/Animations/GetHitL1.tres" id="23_9ri19"]
+[ext_resource type="Animation" path="res://Assets/Animations/GetHitR1.tres" id="24_r0wyo"]
+[ext_resource type="Animation" path="res://Assets/Animations/Getup1.tres" id="25_jfljo"]
+[ext_resource type="Animation" path="res://Assets/Animations/Idle.tres" id="26_oa5lq"]
+[ext_resource type="Animation" path="res://Assets/Animations/IdleAlert1.tres" id="27_saj08"]
+[ext_resource type="Animation" path="res://Assets/Animations/IdleInjured.tres" id="28_xui6d"]
+[ext_resource type="Animation" path="res://Assets/Animations/Jump.tres" id="29_39zzz"]
+[ext_resource type="Animation" path="res://Assets/Animations/KnockbackBack1.tres" id="30_zg4zd"]
+[ext_resource type="Animation" path="res://Assets/Animations/KnockbackBack2.tres" id="31_men2k"]
+[ext_resource type="Animation" path="res://Assets/Animations/Knockdown1.tres" id="32_hvdga"]
+[ext_resource type="Animation" path="res://Assets/Animations/Land.tres" id="33_j8gxb"]
+[ext_resource type="Animation" path="res://Assets/Animations/Pickup.tres" id="34_enyjq"]
+[ext_resource type="Animation" path="res://Assets/Animations/Revive1.tres" id="35_wx4hh"]
+[ext_resource type="Animation" path="res://Assets/Animations/RollBackward.tres" id="36_5344t"]
+[ext_resource type="Animation" path="res://Assets/Animations/RollForward.tres" id="37_fjgvq"]
+[ext_resource type="Animation" path="res://Assets/Animations/RollLeft.tres" id="38_4k7bn"]
+[ext_resource type="Animation" path="res://Assets/Animations/RollRight.tres" id="39_7xj8b"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunBackward.tres" id="40_7tfq7"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunBackwardLeft.tres" id="41_xkwo8"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunBackwardRight.tres" id="42_86vom"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunForward.tres" id="43_pzom7"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunForwardLeft.tres" id="44_5wbbr"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunForwardRight.tres" id="45_4qmw2"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunLeft.tres" id="46_wxfog"]
+[ext_resource type="Animation" path="res://Assets/Animations/RunRight.tres" id="47_o4mvn"]
+[ext_resource type="Animation" path="res://Assets/Animations/Sprint.tres" id="48_4a4wf"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeBackward.tres" id="49_hym4l"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeBackwardLeft.tres" id="50_1vfz3"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeBackwardRight.tres" id="51_zfkki"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeForward.tres" id="52_bj3j4"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeForwardLeft.tres" id="53_wj99i"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeForwardRight.tres" id="54_bag7i"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeLeft.tres" id="55_1mnbq"]
+[ext_resource type="Animation" path="res://Assets/Animations/StrafeRight.tres" id="56_ns6pu"]
+[ext_resource type="Animation" path="res://Assets/Animations/Stunned.tres" id="57_q80id"]
+[ext_resource type="Animation" path="res://Assets/Animations/Turn180Left.tres" id="58_w3706"]
+[ext_resource type="Animation" path="res://Assets/Animations/Turn180Right.tres" id="59_i8j76"]
+[ext_resource type="Animation" path="res://Assets/Animations/TurnLeft90.tres" id="60_b2laj"]
+[ext_resource type="Animation" path="res://Assets/Animations/TurnLeftLoop.tres" id="61_lj4h9"]
+[ext_resource type="Animation" path="res://Assets/Animations/TurnRight90.tres" id="62_du779"]
+[ext_resource type="Animation" path="res://Assets/Animations/TurnRightLoop.tres" id="63_4g9dp"]
+[ext_resource type="Animation" path="res://Assets/Animations/WalkInjured.tres" id="64_mrcg6"]
+
+[resource]
+_data = {
+&"Activate": ExtResource("1_ujzde"),
+&"AttackKickL1": ExtResource("2_8gxd6"),
+&"AttackKickR1": ExtResource("3_ncf10"),
+&"AttackL1": ExtResource("4_epf91"),
+&"AttackL2": ExtResource("5_dhodz"),
+&"AttackL3": ExtResource("6_doc9i"),
+&"AttackR1": ExtResource("7_s0j8h"),
+&"AttackR2": ExtResource("8_t9lgm"),
+&"AttackR3": ExtResource("9_xg9ed"),
+&"Block": ExtResource("10_n581u"),
+&"BlockBreak1": ExtResource("11_33xtp"),
+&"BlockGetHit1": ExtResource("12_lpft7"),
+&"BlockGetHit2": ExtResource("13_5v2se"),
+&"Boost1": ExtResource("14_h60kv"),
+&"Death1": ExtResource("15_j50ce"),
+&"DiveRollForward1": ExtResource("16_9uvw5"),
+&"DodgeBackward": ExtResource("17_3efr4"),
+&"DodgeLeft": ExtResource("18_edt2s"),
+&"DodgeRight": ExtResource("19_ywb3w"),
+&"Fall": ExtResource("20_kh5dn"),
+&"GetHitB1": ExtResource("21_sipzz"),
+&"GetHitF1": ExtResource("22_5fk2z"),
+&"GetHitL1": ExtResource("23_9ri19"),
+&"GetHitR1": ExtResource("24_r0wyo"),
+&"Getup1": ExtResource("25_jfljo"),
+&"Idle": ExtResource("26_oa5lq"),
+&"IdleAlert1": ExtResource("27_saj08"),
+&"IdleInjured": ExtResource("28_xui6d"),
+&"Jump": ExtResource("29_39zzz"),
+&"KnockbackBack1": ExtResource("30_zg4zd"),
+&"KnockbackBack2": ExtResource("31_men2k"),
+&"Knockdown1": ExtResource("32_hvdga"),
+&"Land": ExtResource("33_j8gxb"),
+&"Pickup": ExtResource("34_enyjq"),
+&"Revive1": ExtResource("35_wx4hh"),
+&"RollBackward": ExtResource("36_5344t"),
+&"RollForward": ExtResource("37_fjgvq"),
+&"RollLeft": ExtResource("38_4k7bn"),
+&"RollRight": ExtResource("39_7xj8b"),
+&"RunBackward": ExtResource("40_7tfq7"),
+&"RunBackwardLeft": ExtResource("41_xkwo8"),
+&"RunBackwardRight": ExtResource("42_86vom"),
+&"RunForward": ExtResource("43_pzom7"),
+&"RunForwardLeft": ExtResource("44_5wbbr"),
+&"RunForwardRight": ExtResource("45_4qmw2"),
+&"RunLeft": ExtResource("46_wxfog"),
+&"RunRight": ExtResource("47_o4mvn"),
+&"Sprint": ExtResource("48_4a4wf"),
+&"StrafeBackward": ExtResource("49_hym4l"),
+&"StrafeBackwardLeft": ExtResource("50_1vfz3"),
+&"StrafeBackwardRight": ExtResource("51_zfkki"),
+&"StrafeForward": ExtResource("52_bj3j4"),
+&"StrafeForwardLeft": ExtResource("53_wj99i"),
+&"StrafeForwardRight": ExtResource("54_bag7i"),
+&"StrafeLeft": ExtResource("55_1mnbq"),
+&"StrafeRight": ExtResource("56_ns6pu"),
+&"Stunned": ExtResource("57_q80id"),
+&"Turn180Left": ExtResource("58_w3706"),
+&"Turn180Right": ExtResource("59_i8j76"),
+&"TurnLeft90": ExtResource("60_b2laj"),
+&"TurnLeftLoop": ExtResource("61_lj4h9"),
+&"TurnRight90": ExtResource("62_du779"),
+&"TurnRightLoop": ExtResource("63_4g9dp"),
+&"WalkInjured": ExtResource("64_mrcg6")
+}

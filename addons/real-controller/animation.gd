@@ -42,5 +42,5 @@ func _process(delta: float) -> void:
 	var is_moving_backward = player_movement_component.input_dir.y > 0
 	var target_speed = 1.0 if (is_sprinting and not is_moving_backward) else 0.0
 	var current_speed = animation_tree.get("parameters/Locomotion/SpeedBlend/blend_amount")
-	var smooth_speed = lerp(current_speed, target_speed, delta * 8.0)
+	var smooth_speed = lerp(current_speed, target_speed, delta * 4.0)
 	animation_tree.set("parameters/Locomotion/SpeedBlend/blend_amount", smooth_speed)

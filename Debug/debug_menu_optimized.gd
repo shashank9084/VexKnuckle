@@ -3,6 +3,7 @@ extends Control
 # Assign these in the Inspector, or leave empty to use the existing unique node names.
 @export var action_label: RichTextLabel
 @export var player_property_label: RichTextLabel
+@export var player_move_state_label: RichTextLabel
 @export var fps_label: Label
 @export var online_players_label: Label
 @export var joystick: VirtualJoystickDX
@@ -45,10 +46,22 @@ func _process(delta: float) -> void:
 		_action_timer = 0.0
 		_update_action_states()
 		_update_player_properties_states()
+		_update_player_move_state()
 		if ! is_instance_valid(joystick):
 			_resolve_joystick()
 		if ! is_instance_valid(player):
 			_resolve_player()
+
+func _update_player_move_state() -> void:
+	if !is_instance_valid(player) or ! is_instance_valid(player_move_state_label):
+		return
+	var output := ""
+	var state_text = player.MoveState.find_key(player.get("move_state"))
+	if state_text == null : return
+	output += "Player State : [color=purple]%s[/color]\n" % [state_text]
+	
+	player_move_state_label.text = output
+
 
 func _cache_player_properties() -> void:
 	_player_properties_states.clear()

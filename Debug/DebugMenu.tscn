@@ -21,7 +21,7 @@ corner_radius_bottom_left = 5
 [sub_resource type="LabelSettings" id="LabelSettings_6ruxi"]
 font_size = 8
 
-[node name="DebugMenu" type="Control" unique_id=1623536858 node_paths=PackedStringArray("action_label", "player_property_label", "fps_label", "online_players_label")]
+[node name="DebugMenu" type="Control" unique_id=1623536858 node_paths=PackedStringArray("action_label", "player_property_label", "player_move_state_label", "fps_label", "online_players_label")]
 z_index = 49
 layout_mode = 3
 anchors_preset = 15
@@ -33,6 +33,7 @@ mouse_filter = 2
 script = ExtResource("1_6ruxi")
 action_label = NodePath("MarginContainer/HFlowContainer/InputAction")
 player_property_label = NodePath("MarginContainer/HFlowContainer/PlayerProperties")
+player_move_state_label = NodePath("MarginContainer/HFlowContainer/PlayerMoveState")
 fps_label = NodePath("MarginContainer/HFlowContainer/FPS")
 online_players_label = NodePath("MarginContainer/HFlowContainer/OnlinePlayers")
 player_properties = Array[String](["is_running", "is_walking", "is_sprinting"])
@@ -51,6 +52,21 @@ theme_override_constants/margin_right = 50
 [node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer" unique_id=347070328]
 layout_mode = 2
 alignment = 2
+
+[node name="PlayerMoveState" type="RichTextLabel" parent="MarginContainer/HFlowContainer" unique_id=751637757]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 11
+theme_override_font_sizes/bold_font_size = 11
+theme_override_font_sizes/bold_italics_font_size = 11
+theme_override_font_sizes/italics_font_size = 11
+theme_override_font_sizes/mono_font_size = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ruxi")
+bbcode_enabled = true
+text = "[b][color=red]Player Is Not Found Yet[/color][/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
 
 [node name="PlayerProperties" type="RichTextLabel" parent="MarginContainer/HFlowContainer" unique_id=1178940239]
 layout_mode = 2

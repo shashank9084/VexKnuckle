@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cono2u6qdtvr8"]
+
+[ext_resource type="PackedScene" uid="uid://bxwc2p4oy3mk0" path="res://Scenes/MainGame/Map.tscn" id="1_gijin"]
+[ext_resource type="PackedScene" uid="uid://kawv7la304bk" path="res://Debug/player.tscn" id="2_s5kmk"]
+
+[node name="DemoMain" type="Node" unique_id=681890895]
+
+[node name="Map" parent="." unique_id=196347776 instance=ExtResource("1_gijin")]
+
+[node name="Player" parent="." unique_id=1336033051 instance=ExtResource("2_s5kmk")]

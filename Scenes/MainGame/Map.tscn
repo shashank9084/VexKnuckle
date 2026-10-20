@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://bxwc2p4oy3mk0"]
 
-[ext_resource type="Texture2D" uid="uid://csnm6lj0a2xuv" path="res://icon.svg" id="1_byjq1"]
+[ext_resource type="Texture2D" uid="uid://bcdg1dpwugmu7" path="res://Assets/kenney_prototype-textures/PNG/Dark/texture_03.png" id="1_v6eod"]
+[ext_resource type="Texture2D" uid="uid://c3obk88m0vs2c" path="res://Assets/kenney_prototype-textures/PNG/Orange/texture_09.png" id="2_8m2jf"]
+[ext_resource type="Texture2D" uid="uid://cqxxfjpnh7kjk" path="res://Assets/kenney_prototype-textures/PNG/Light/texture_03.png" id="3_g3yh4"]
+[ext_resource type="Texture2D" uid="uid://cvuxvv1tw051" path="res://Assets/kenney_prototype-textures/PNG/Purple/texture_07.png" id="4_7bxlu"]
+[ext_resource type="Texture2D" uid="uid://tpnxuby7of0j" path="res://Assets/kenney_prototype-textures/PNG/Green/texture_13.png" id="5_8m2jf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_byjq1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -14,9 +18,31 @@ background_mode = 2
 sky = SubResource("Sky_oc7d7")
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oc7d7"]
-albedo_texture = ExtResource("1_byjq1")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ob80j"]
+albedo_texture = ExtResource("1_v6eod")
 uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5v6sm"]
+albedo_texture = ExtResource("2_8m2jf")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_si36b"]
+albedo_texture = ExtResource("3_g3yh4")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x102f"]
+albedo_texture = ExtResource("4_7bxlu")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_8m2jf"]
+size = Vector3(5, 0.07, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh67x"]
+albedo_texture = ExtResource("5_8m2jf")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8m2jf"]
+size = Vector3(5, 0.07, 100)
 
 [node name="Map" type="Node3D" unique_id=196347776]
 
@@ -29,6 +55,39 @@ shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2019756001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = SubResource("StandardMaterial3D_oc7d7")
+material_override = SubResource("StandardMaterial3D_ob80j")
 use_collision = true
-size = Vector3(100, 1, 100)
+size = Vector3(1000, 1, 1000)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=2130339543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8842466, -5.5340347)
+material_override = SubResource("StandardMaterial3D_5v6sm")
+use_collision = true
+size = Vector3(20, 4.0390015, 0.143)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=1909108641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.512152, 0.037635803, 16.59947)
+material_override = SubResource("StandardMaterial3D_si36b")
+use_collision = true
+radius = 7.7378864
+radial_segments = 96
+rings = 48
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=2046256471]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 33.022)
+material_override = SubResource("StandardMaterial3D_x102f")
+use_collision = true
+size = Vector3(5, 60, 5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1732187279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.297493, 0, -0.47188938)
+constant_linear_velocity = Vector3(0, 0, 6)
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2114714837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8732347, 0, 0)
+mesh = SubResource("BoxMesh_8m2jf")
+surface_material_override/0 = SubResource("StandardMaterial3D_dh67x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=957003405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8732347, 0, 0)
+shape = SubResource("BoxShape3D_8m2jf")
