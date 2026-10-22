@@ -1,5 +1,5 @@
 extends Node
-class_name PlayerMovementRootMotionComponent
+class_name PlayerMovementRootMotionComponen
 
 @export var body : CharacterBody3D
 @export var charector : Node3D   # child of the CharacterBody3D, holds the model and camera yaw
