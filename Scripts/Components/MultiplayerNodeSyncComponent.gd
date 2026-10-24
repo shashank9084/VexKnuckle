@@ -1,11 +1,9 @@
-extends Node
+extends ComponentsManeger
 class_name MultiplayerNodeSyncComponent
 
-
-@export var player : Node3D
-@export var nodes : Array[Node]
+@export var _nodes : Array[Node]
 
 func _ready() -> void:
 	if !player.is_multiplayer_authority():
-		for n in nodes:
+		for n in _nodes:
 			n.queue_free()

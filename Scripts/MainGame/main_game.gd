@@ -2,7 +2,7 @@ extends Node
 
 @onready var _spawner : MultiplayerSpawner = $Players/MultiplayerSpawner
 
-const PLAYER_SCENE := preload("res://Scenes/Player/Player.tscn")
+const PLAYER_SCENE := preload("res://Debug/player.tscn")
 
 
 func _ready() -> void:

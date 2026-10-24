@@ -20,8 +20,6 @@ func _process(delta: float) -> void:
 		if joystick:
 			joystick.joystick_moved.connect(update_players)
 
-func update_action_button():
-	action
 
 func update_players(_players):
 	var text := ""

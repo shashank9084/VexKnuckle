@@ -1,8 +1,7 @@
-extends Node
+extends ComponentsManeger
 class_name MultiplayerCameraSyncComponent
 
 @export var camera : Camera3D
-@export var player : Node3D
 
 func _ready() -> void:
 	if !player:

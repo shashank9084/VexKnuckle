@@ -1,13 +1,14 @@
 extends Node
 class_name ComponentsManeger
 
-@export var player : Node3D
+@export var player : CharacterBody3D
+@export var component_nodes : Array[ComponentsManeger]
 
-func _enter_tree() -> void:
-	for c : Node in get_children():
-		if c.get("multiplayer_authority_check") and c.get("multiplayer_authority_check") == true:
-			if !is_multiplayer_authority():
-				c.queue_free()
+func _ready() -> void:
+	if !player.is_multiplayer_authority():
+		for n in component_nodes:
+			if is_instance_valid(n):
+				n.queue_free()
 			
 			
 			

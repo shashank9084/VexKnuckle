@@ -7,12 +7,11 @@ extends Control
 @export var fps_label: Label
 @export var online_players_label: Label
 @export var joystick: VirtualJoystickDX
-@export var player : PlayerMovementComponent
+@export var player : PlayerRootMotionMovementComponent
 
 # Used only if the joystick export is not assigned.
 @export var player_properties : Array[String]
-@export var player_path: NodePath = ^"MainGame/Players/1/ComponentsManeger/PlayerMovementComponent"
-@export var joystick_path: NodePath = ^"MainGame/Players/1/Ui/Joystick"
+@export var player_path: NodePath = ^"MainGame/Players/1/ComponentsManeger/PlayerRootMotionMovementComponent"
 @export_range(0.05, 1.0, 0.05) var action_poll_interval: float = 0.1
 
 var _player_properties_states : Dictionary = {}
@@ -47,8 +46,6 @@ func _process(delta: float) -> void:
 		_update_action_states()
 		_update_player_properties_states()
 		_update_player_move_state()
-		if ! is_instance_valid(joystick):
-			_resolve_joystick()
 		if ! is_instance_valid(player):
 			_resolve_player()
 
@@ -56,9 +53,9 @@ func _update_player_move_state() -> void:
 	if !is_instance_valid(player) or ! is_instance_valid(player_move_state_label):
 		return
 	var output := ""
-	var state_text = player.MoveState.find_key(player.get("move_state"))
+	var state_text = player.STATES.find_key(player.get("state"))
 	if state_text == null : return
-	output += "Player State : [color=purple]%s[/color]\n" % [state_text]
+	output += "Player State : [color=cyan]%s[/color]\n" % [state_text]
 	
 	player_move_state_label.text = output
 
@@ -68,7 +65,7 @@ func _cache_player_properties() -> void:
 	
 	for p in player_properties:
 		if player.get(p) != null:
-			_player_properties_states[p] = false
+			_player_properties_states[p] = "Null"
 	_refresh_player_property_label()
 
 func _cache_actions() -> void:
@@ -91,7 +88,7 @@ func _update_player_properties_states() -> void:
 
 	var changed := false
 	for property in player_properties:
-		var boolen = player.get(property)
+		var boolen = str(player.get(property))
 		if boolen == null: return
 		if _player_properties_states[property] != boolen:
 			_player_properties_states[property] = boolen
@@ -122,9 +119,23 @@ func _refresh_player_property_label() -> void:
 	for property in player_properties:
 		var boolen = player.get(property)
 		if boolen == null : return
-		var state_text := "true" if boolen else "false"
-		var color := "green" if boolen else "red"
-		output += "%s : [color=%s]%s[/color]\n" % [String(property), color, state_text]
+		match type_string(typeof(boolen)):
+			"int":
+				boolen = str(boolen)
+				output += "%s : [color=%s]%s[/color]\n" % [String(property), "green", boolen]
+			"String":
+				boolen = str(boolen)
+				output += "%s : [color=%s]%s[/color]\n" % [String(property), "black", boolen]
+			"Vector2":
+				boolen = str(boolen)
+				output += "%s : [color=%s]%s[/color]\n" % [String(property), "blue", boolen]
+			"bool":
+				var state_text := "true" if boolen else "false"
+				var color := "green" if boolen else "red"
+				output += "%s : [color=%s]%s[/color]\n" % [String(property), color, state_text]
+			_:
+				boolen = str(boolen)
+				output += "%s : [color=%s]%s[/color]\n" % [String(property), "pink", boolen]
 
 	player_property_label.text = output
 
@@ -142,18 +153,6 @@ func _refresh_action_label() -> void:
 	action_label.text = output
 
 
-func _resolve_joystick() -> void:
-	if is_instance_valid(joystick):
-		return
-
-	# Match the lookup style used in the original script.
-	var root := get_parent()
-	if is_instance_valid(root) and not joystick_path.is_empty():
-		joystick = root.get_node_or_null(joystick_path) as VirtualJoystickDX
-
-	if is_instance_valid(joystick) and joystick.has_signal("joystick_moved"):
-		if not joystick.joystick_moved.is_connected(_on_joystick_moved):
-			joystick.joystick_moved.connect(_on_joystick_moved)
 			
 func _resolve_player() -> void:
 	if is_instance_valid(player):
@@ -162,7 +161,7 @@ func _resolve_player() -> void:
 	# Match the lookup style used in the original script.
 	var root := get_parent()
 	if is_instance_valid(root) and not player_path.is_empty():
-		player = root.get_node_or_null(player_path) as PlayerMovementComponent
+		player = root.get_node_or_null(player_path) as PlayerRootMotionMovementComponent
 
 	if is_instance_valid(player):
 		_cache_player_properties()

@@ -57,7 +57,7 @@ func _on_connected_to_server() -> void:
 	var id : int = multiplayer.get_unique_id()
 	load_main_game_scene()
 	_add_player(id ,local_info)
-	rpc_register_player.rpc_id(1 , local_info)
+	rpc_register_player.rpc_id(1 ,id ,local_info)
 	printt("Connected to Server Successfully")
 	
 func _on_connection_failed() -> void:
@@ -98,18 +98,19 @@ func _make_player_info(player_name : String) -> Dictionary:
 		"name"  : player_name
 	}
 
-
 @rpc("any_peer", "reliable")
-func rpc_register_player(info: Dictionary) -> void:
-	var sender := multiplayer.get_remote_sender_id()
-	_add_player(sender , info)
+func rpc_register_player(id: int, info: Dictionary) -> void:
 	if multiplayer.is_server():
+		id = multiplayer.get_remote_sender_id()  # don't trust the id the client sends
+		_add_player(id, info)
 		for existing_id in players:
-			if existing_id != sender:
-				rpc_register_player.rpc_id(sender, players[existing_id])
+			if existing_id != id:
+				rpc_register_player.rpc_id(id, existing_id, players[existing_id])
 		for peer_id in multiplayer.get_peers():
-			if peer_id != sender:
-				rpc_register_player.rpc_id(peer_id, info)
+			if peer_id != id:
+				rpc_register_player.rpc_id(peer_id, id, info)
+	else:
+		_add_player(id, info)
 				
 func load_main_menu_scene() -> void:
 	main_game_scene = get_tree().get_current_scene()

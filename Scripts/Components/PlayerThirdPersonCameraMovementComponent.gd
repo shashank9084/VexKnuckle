@@ -1,14 +1,11 @@
-extends Node
+extends ComponentsManeger
 class_name  PlayerThirdPersonCameraMovementComponent
-
-@export var multiplayer_authority_check = false
 
 @export var drag_area : Control
 @export var camera : Camera3D
 @export var camera_pivot: Node3D
 @export var spring_arm: SpringArm3D
 @export var character : Node3D
-@export var player : Node3D
 
 @export var camera_distance: float = 3.5
 @export var mouse_sensitivity: float = 0.005
@@ -24,7 +21,9 @@ func _process(delta: float) -> void:
 	_handle_controller_camera(delta)
 	
 func _handle_controller_camera(delta: float) -> void:
-	if player.state == player.STATES["RUN"]:
+	var s = player.rmmc.state
+	var _s = player.rmmc.STATES
+	if s == _s[&"SPRINT"] or s == _s[&"RUN"] or s == _s[&"WALK"]:
 		character.rotation.y = lerp_angle(character.rotation.y, camera_pivot.rotation.y + PI, rotation_speed * delta)
 
 

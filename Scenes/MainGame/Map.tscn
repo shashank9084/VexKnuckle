@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cqxxfjpnh7kjk" path="res://Assets/kenney_prototype-textures/PNG/Light/texture_03.png" id="3_g3yh4"]
 [ext_resource type="Texture2D" uid="uid://cvuxvv1tw051" path="res://Assets/kenney_prototype-textures/PNG/Purple/texture_07.png" id="4_7bxlu"]
 [ext_resource type="Texture2D" uid="uid://tpnxuby7of0j" path="res://Assets/kenney_prototype-textures/PNG/Green/texture_13.png" id="5_8m2jf"]
+[ext_resource type="Texture2D" uid="uid://cux0jdnl7l60s" path="res://Assets/kenney_prototype-textures/PNG/Red/texture_13.png" id="6_g3yh4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_byjq1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -35,14 +36,56 @@ albedo_texture = ExtResource("4_7bxlu")
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_8m2jf"]
-size = Vector3(5, 0.07, 100)
+size = Vector3(5, 0.07, 900)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh67x"]
 albedo_texture = ExtResource("5_8m2jf")
 uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8m2jf"]
-size = Vector3(5, 0.07, 100)
+size = Vector3(5, 0.07, 900)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bxlu"]
+albedo_texture = ExtResource("6_g3yh4")
+uv1_triplanar = true
+
+[sub_resource type="Animation" id="Animation_g3yh4"]
+resource_name = "Map"
+length = 10.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D4:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 9, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.9, 26.435), Vector3(0, -0.9, 26.435), Vector3(0, 59, 26.435), Vector3(0, 59, 26.435)]
+}
+
+[sub_resource type="Animation" id="Animation_7bxlu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D4:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -1.514833, 26.43474)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ob80j"]
+_data = {
+&"Map": SubResource("Animation_g3yh4"),
+&"RESET": SubResource("Animation_7bxlu")
+}
 
 [node name="Map" type="Node3D" unique_id=196347776]
 
@@ -81,7 +124,7 @@ size = Vector3(5, 60, 5)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1732187279]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.297493, 0, -0.47188938)
-constant_linear_velocity = Vector3(0, 0, 6)
+constant_linear_velocity = Vector3(0, 0, 15)
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2114714837]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8732347, 0, 0)
@@ -91,3 +134,39 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dh67x")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=957003405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8732347, 0, 0)
 shape = SubResource("BoxShape3D_8m2jf")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=185863432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.828203, 0, -0.47188938)
+constant_linear_velocity = Vector3(0, 0, -15)
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1026731157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8732347, 0, 0)
+mesh = SubResource("BoxMesh_8m2jf")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bxlu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=244500592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8732347, 0, 0)
+shape = SubResource("BoxShape3D_8m2jf")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=488844311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.240025, 0, -17.733501)
+use_collision = true
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D" unique_id=1714346850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+polygon = PackedVector2Array(-20, 0.042, -7, 4, 7, 4, 20, -0.136)
+depth = 6.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=961719194]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.261, 0)
+operation = 2
+size = Vector3(14, 5, 6)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=617490592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.514833, 26.43474)
+use_collision = true
+size = Vector3(4, 2, 8.454)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=331133326]
+libraries/ = SubResource("AnimationLibrary_ob80j")
+autoplay = &"Map"

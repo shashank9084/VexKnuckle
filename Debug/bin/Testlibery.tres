@@ -1,10 +1,26 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://ce6lwk5huinfl"]
 
+[ext_resource type="Animation" uid="uid://r1hhyb8yxn6s" path="res://addons/real-controller/animations/walk_backward.res" id="1_48wvs"]
 [ext_resource type="Animation" path="res://Assets/Animations/Jump.tres" id="1_d4255"]
+[ext_resource type="Animation" uid="uid://b6i03tvrwnc0k" path="res://addons/real-controller/animations/walk_backward_left.res" id="2_bedyk"]
 [ext_resource type="Animation" path="res://Assets/Animations/RunForward.tres" id="2_mdm4v"]
+[ext_resource type="Animation" uid="uid://dlvamho2gwsmj" path="res://addons/real-controller/animations/walk_backward_right.res" id="3_in6h2"]
+[ext_resource type="Animation" uid="uid://bkta0dgulet3s" path="res://addons/real-controller/animations/walk_forward.res" id="4_x1vo1"]
+[ext_resource type="Animation" uid="uid://dnumakimr3ljs" path="res://addons/real-controller/animations/walk_forward_left.res" id="5_i6bvq"]
+[ext_resource type="Animation" uid="uid://dtfo7xk6ln4xi" path="res://addons/real-controller/animations/walk_forward_right.res" id="6_60rbn"]
+[ext_resource type="Animation" uid="uid://clcj8g6qc586t" path="res://addons/real-controller/animations/walk_left.res" id="7_bax3o"]
+[ext_resource type="Animation" uid="uid://cb7r6wgte6fil" path="res://addons/real-controller/animations/walk_right.res" id="8_e4qhy"]
 
 [resource]
 _data = {
+&"HumanM_Walk01_Backward": ExtResource("1_48wvs"),
+&"HumanM_Walk01_BackwardLeft": ExtResource("2_bedyk"),
+&"HumanM_Walk01_BackwardRight": ExtResource("3_in6h2"),
+&"HumanM_Walk01_Forward": ExtResource("4_x1vo1"),
+&"HumanM_Walk01_ForwardLeft": ExtResource("5_i6bvq"),
+&"HumanM_Walk01_ForwardRight": ExtResource("6_60rbn"),
+&"HumanM_Walk01_Left": ExtResource("7_bax3o"),
+&"HumanM_Walk01_Right": ExtResource("8_e4qhy"),
 &"Jump": ExtResource("1_d4255"),
 &"RunForward": ExtResource("2_mdm4v")
 }
