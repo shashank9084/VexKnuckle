@@ -59,8 +59,6 @@ func _ready() -> void:
 	change_visual_health_bar(current_health)
 #endregion
 
-func _process(delta: float) -> void:
-	heal(0.05)
 
 #region ─── Public API ───────────────────────────────
 func change_visual_health_bar(health : float):

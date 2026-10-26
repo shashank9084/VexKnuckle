@@ -24,7 +24,7 @@ config/icon="uid://cvg1u7f0eka2m"
 [autoload]
 
 NetworkManeger="*uid://dgi2u40fx7bnb"
-DebugMenu="uid://c4fuh0bx4424w"
+DebugMenu="*uid://c4fuh0bx4424w"
 
 [display]
 
@@ -60,6 +60,10 @@ run={
 "events": []
 }
 strafe={
+"deadzone": 0.2,
+"events": []
+}
+attack={
 "deadzone": 0.2,
 "events": []
 }

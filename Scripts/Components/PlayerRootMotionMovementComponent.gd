@@ -7,7 +7,7 @@ class_name PlayerRootMotionMovementComponent
 # =============================================================================
 
 # Every state the player can be in.
-enum STATES { IDLE, WALK, RUN, SPRINT, STRAFE, JUMPING, FALLING }
+enum STATES { IDLE, WALK, RUN, SPRINT, STRAFE, JUMPING, FALLING , ATTACKING }
 
 # Must match the input order of the "JumpType" node in the AnimationTree.
 enum JumpType { RunJump, WalkJump, SprintJump, IdleJump }
@@ -51,6 +51,7 @@ const PATH_WALK_BLEND := &"parameters/WalkBlendSpace/blend_position"
 const PATH_STRAFE_BLEND := &"parameters/StrafeBlendSpace/blend_position"
 const PATH_SPRINT_BLEND := &"parameters/SprintBlend/blend_amount"
 const PATH_LAND_SHOT := &"parameters/LandShot/request"
+const PATH_ATTACK_SHOT := &"parameters/AttackOneShot/request"
 
 
 # =============================================================================
@@ -72,9 +73,10 @@ const JUMP_NAMES := [&"RunJump", &"WalkJump", &"SprintJump", &"IdleJump"]
 # 5. RUNTIME VARIABLES
 # =============================================================================
 
+@export_category("Multiplayer Sync")
 # Synced to all peers by a MultiplayerSynchronizer (path ":state").
 # The setter runs on every peer, so remote animations follow automatically.
-var state: int = STATES.IDLE:
+@export var state: int = STATES.IDLE:
 	set(value):
 		if value == state:
 			return
@@ -83,7 +85,7 @@ var state: int = STATES.IDLE:
 
 # Synced to all peers (path ":move_input"). Lets remote peers blend animations
 # without having their own input.
-var move_input := Vector2.ZERO
+@export var move_input := Vector2.ZERO
 
 # Local only. Toggled by the "strafe" input action.
 var strafe_mode := false
@@ -145,11 +147,10 @@ func _read_input() -> void:
 
 	var dir := Input.get_vector(&"ui_left", &"ui_right", &"ui_up", &"ui_down")
 
-	# Strafe mode only allows forward and backward movement.
-	if strafe_mode:
-		dir.x = 0.0
-
 	move_input = dir
+	
+	if Input.is_action_just_pressed(&"attack"):
+		animation_tree.set(PATH_ATTACK_SHOT,AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 
 # =============================================================================
@@ -375,5 +376,5 @@ func _update_blends(delta: float) -> void:
 
 	# Smoothly move between running and sprinting
 	var target := sprint_blend_value if state == STATES.SPRINT else run_blend_value
-	_sprint_blend = lerpf(_sprint_blend, target, 1.0 - exp(-sprint_blend_speed * delta))
+	_sprint_blend = snappedf(lerpf(_sprint_blend, target, 1.0 - exp(-sprint_blend_speed * delta)),0.001)
 	animation_tree.set(PATH_SPRINT_BLEND, _sprint_blend)

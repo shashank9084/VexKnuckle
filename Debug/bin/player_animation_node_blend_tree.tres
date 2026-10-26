@@ -19,6 +19,9 @@ animation = &"PlayerAnimationLibrary/Fall"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nwu7j"]
 animation = &"PlayerAnimationLibrary/Sprint"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4dlqy"]
+animation = &"PlayerAnimationLibrary/AttackR2"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dwkex"]
 animation = &"Testing/RunJump"
 
@@ -27,6 +30,10 @@ animation = &"Testing/RunJump"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vgphs"]
 animation = &"Testing/RunJump"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_t0lkh"]
+fadein_time = 0.1
+fadeout_time = 0.1
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_sjk7p"]
 input_0/name = "RunJump"
@@ -47,7 +54,7 @@ input_3/break_loop_at_end = false
 input_3/reset = true
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_nevlm"]
-fadein_time = 0.3
+fadein_time = 0.1
 break_loop_at_end = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_o25mt"]
@@ -66,7 +73,7 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_46cic"]
-xfade_time = 0.3
+xfade_time = 0.1
 input_0/name = "Movement"
 input_0/auto_advance = false
 input_0/break_loop_at_end = false
@@ -194,9 +201,6 @@ animation = &"Testlibery/HumanM_Walk01_Forward"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ryox"]
 animation = &"Testlibery/HumanM_Walk01_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b1x22"]
-animation = &"Testlibery/HumanM_Walk01_BackwardRight"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_inpto"]
 animation = &"Testlibery/HumanM_Walk01_Backward"
 
@@ -212,6 +216,9 @@ animation = &"Testlibery/HumanM_Walk01_ForwardRight"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_leiwb"]
 animation = &"Testlibery/HumanM_Walk01_BackwardRight"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b1x22"]
+animation = &"Testlibery/HumanM_Walk01_Right"
+
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_pi5uu"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_eexir")
 blend_point_0/pos = Vector2(0, -1)
@@ -219,30 +226,30 @@ blend_point_0/name = &"Testlibery_HumanM_Walk01_Forward"
 blend_point_1/node = SubResource("AnimationNodeAnimation_8ryox")
 blend_point_1/pos = Vector2(-1, 0)
 blend_point_1/name = &"Testlibery_HumanM_Walk01_Left"
-blend_point_2/node = SubResource("AnimationNodeAnimation_b1x22")
-blend_point_2/pos = Vector2(1, 0)
-blend_point_2/name = &"Testlibery_HumanM_Walk01_BackwardRight"
-blend_point_3/node = SubResource("AnimationNodeAnimation_inpto")
-blend_point_3/pos = Vector2(0, 1)
-blend_point_3/name = &"Testlibery_HumanM_Walk01_Backward"
-blend_point_4/node = SubResource("AnimationNodeAnimation_lpxf5")
-blend_point_4/pos = Vector2(-0.5, 0.5)
-blend_point_4/name = &"Testlibery_HumanM_Walk01_BackwardLeft"
-blend_point_5/node = SubResource("AnimationNodeAnimation_lx8vc")
-blend_point_5/pos = Vector2(-0.5, -0.6)
-blend_point_5/name = &"Testlibery_HumanM_Walk01_ForwardLeft"
-blend_point_6/node = SubResource("AnimationNodeAnimation_s470e")
-blend_point_6/pos = Vector2(0.5, -0.5)
-blend_point_6/name = &"Testlibery_HumanM_Walk01_ForwardRight"
-blend_point_7/node = SubResource("AnimationNodeAnimation_leiwb")
-blend_point_7/pos = Vector2(0.5, 0.5)
-blend_point_7/name = &"Testlibery_HumanM_Walk01_BackwardRight 2"
+blend_point_2/node = SubResource("AnimationNodeAnimation_inpto")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_2/name = &"Testlibery_HumanM_Walk01_Backward"
+blend_point_3/node = SubResource("AnimationNodeAnimation_lpxf5")
+blend_point_3/pos = Vector2(-0.5, 0.5)
+blend_point_3/name = &"Testlibery_HumanM_Walk01_BackwardLeft"
+blend_point_4/node = SubResource("AnimationNodeAnimation_lx8vc")
+blend_point_4/pos = Vector2(-0.5, -0.6)
+blend_point_4/name = &"Testlibery_HumanM_Walk01_ForwardLeft"
+blend_point_5/node = SubResource("AnimationNodeAnimation_s470e")
+blend_point_5/pos = Vector2(0.5, -0.5)
+blend_point_5/name = &"Testlibery_HumanM_Walk01_ForwardRight"
+blend_point_6/node = SubResource("AnimationNodeAnimation_leiwb")
+blend_point_6/pos = Vector2(0.5, 0.5)
+blend_point_6/name = &"Testlibery_HumanM_Walk01_BackwardRight 2"
+blend_point_7/node = SubResource("AnimationNodeAnimation_b1x22")
+blend_point_7/pos = Vector2(1, 0)
+blend_point_7/name = &"Testlibery_HumanM_Walk01_Right"
 
 [resource]
-graph_offset = Vector2(355.6477, -165.44508)
-nodes/output/position = Vector2(1320, -240)
+graph_offset = Vector2(467.12274, -201.0824)
+nodes/output/position = Vector2(1520, -280)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_38ocp")
-"nodes/Animation 4/position" = Vector2(660, 180)
+"nodes/Animation 4/position" = Vector2(560, 40)
 nodes/MovementStates/node = SubResource("AnimationNodeTransition_o25mt")
 nodes/MovementStates/position = Vector2(-446.3481, -252.30429)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_o25mt")
@@ -250,13 +257,13 @@ nodes/MovementStates/position = Vector2(-446.3481, -252.30429)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_46cic")
 "nodes/Animation 2/position" = Vector2(-1500, 80)
 nodes/JumpType/node = SubResource("AnimationNodeTransition_sjk7p")
-nodes/JumpType/position = Vector2(140, 350.8672)
+nodes/JumpType/position = Vector2(0, 280)
 nodes/SprintBlend/node = SubResource("AnimationNodeBlend3_rrmem")
 nodes/SprintBlend/position = Vector2(-1041.0991, -357.04453)
 nodes/PlayerStates/node = SubResource("AnimationNodeTransition_46cic")
-nodes/PlayerStates/position = Vector2(700, -160)
+nodes/PlayerStates/position = Vector2(680, -320)
 "nodes/Animation 9/node" = SubResource("AnimationNodeAnimation_ebq3x")
-"nodes/Animation 9/position" = Vector2(-531.6481, 567.71185)
+"nodes/Animation 9/position" = Vector2(-460, 380)
 "nodes/Animation 6/node" = SubResource("AnimationNodeAnimation_nwu7j")
 "nodes/Animation 6/position" = Vector2(-1620, -120)
 nodes/RunBlendSpace/node = SubResource("AnimationNodeBlendSpace2D_oj162")
@@ -266,13 +273,17 @@ nodes/StrafeBlendSpace/position = Vector2(-863.0471, -185.83551)
 nodes/WalkBlendSpace/node = SubResource("AnimationNodeBlendSpace2D_pi5uu")
 nodes/WalkBlendSpace/position = Vector2(-1002.4649, 79.884186)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_vgphs")
-nodes/Animation/position = Vector2(-444.92514, 323.74396)
+nodes/Animation/position = Vector2(-380, 120)
 "nodes/Animation 11/node" = SubResource("AnimationNodeAnimation_srbly")
-"nodes/Animation 11/position" = Vector2(-797.1117, 722.2015)
+"nodes/Animation 11/position" = Vector2(-780, 600)
 "nodes/Animation 8/node" = SubResource("AnimationNodeAnimation_dwkex")
-"nodes/Animation 8/position" = Vector2(-762.72003, 470.464)
+"nodes/Animation 8/position" = Vector2(-640, 220)
 nodes/LandShot/node = SubResource("AnimationNodeOneShot_nevlm")
-nodes/LandShot/position = Vector2(1020, -200)
+nodes/LandShot/position = Vector2(960, -320)
 "nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_nevlm")
 "nodes/Animation 5/position" = Vector2(-60, 60)
-node_connections = [&"output", 0, &"LandShot", &"MovementStates", 0, &"SprintBlend", &"MovementStates", 1, &"StrafeBlendSpace", &"MovementStates", 2, &"WalkBlendSpace", &"JumpType", 0, &"Animation", &"JumpType", 1, &"Animation 8", &"JumpType", 2, &"Animation 9", &"JumpType", 3, &"Animation 11", &"SprintBlend", 0, &"RunBlendSpace", &"SprintBlend", 1, &"Animation 6", &"SprintBlend", 2, &"Animation 2", &"PlayerStates", 0, &"MovementStates", &"PlayerStates", 1, &"Animation 3", &"PlayerStates", 2, &"Animation 5", &"PlayerStates", 3, &"JumpType", &"LandShot", 0, &"PlayerStates", &"LandShot", 1, &"Animation 4"]
+"nodes/Animation 7/node" = SubResource("AnimationNodeAnimation_4dlqy")
+"nodes/Animation 7/position" = Vector2(760, 180)
+nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_t0lkh")
+nodes/AttackOneShot/position = Vector2(1260, -240)
+node_connections = [&"output", 0, &"AttackOneShot", &"MovementStates", 0, &"SprintBlend", &"MovementStates", 1, &"StrafeBlendSpace", &"MovementStates", 2, &"WalkBlendSpace", &"JumpType", 0, &"Animation", &"JumpType", 1, &"Animation 8", &"JumpType", 2, &"Animation 9", &"JumpType", 3, &"Animation 11", &"SprintBlend", 0, &"RunBlendSpace", &"SprintBlend", 1, &"Animation 6", &"SprintBlend", 2, &"Animation 2", &"PlayerStates", 0, &"MovementStates", &"PlayerStates", 1, &"Animation 3", &"PlayerStates", 2, &"Animation 5", &"PlayerStates", 3, &"JumpType", &"LandShot", 0, &"PlayerStates", &"LandShot", 1, &"Animation 4", &"AttackOneShot", 0, &"LandShot", &"AttackOneShot", 1, &"Animation 7"]

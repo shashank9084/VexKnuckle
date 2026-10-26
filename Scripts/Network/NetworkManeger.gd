@@ -135,6 +135,7 @@ func close_server() -> void:
 	players_list_changed.emit({})
 	if peer == null:
 		return
+	multiplayer.multiplayer_peer = null  # detach first so multiplayer reports no active peer
 	peer.close()
 	peer = null
 	local_info = {}
@@ -145,6 +146,7 @@ func leave_server() -> void:
 	players_list_changed.emit({})
 	if peer == null:
 		return
+	multiplayer.multiplayer_peer = null  # detach first so multiplayer reports no active peer
 	peer.close()
 	peer = null
 	local_info = {}

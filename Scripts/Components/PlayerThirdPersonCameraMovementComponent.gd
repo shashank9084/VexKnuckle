@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 func _handle_controller_camera(delta: float) -> void:
 	var s = player.rmmc.state
 	var _s = player.rmmc.STATES
-	if s == _s[&"SPRINT"] or s == _s[&"RUN"] or s == _s[&"WALK"]:
+	if s == _s[&"SPRINT"] or s == _s[&"RUN"] or s == _s[&"WALK"] or s == _s[&"STRAFE"]:
 		character.rotation.y = lerp_angle(character.rotation.y, camera_pivot.rotation.y + PI, rotation_speed * delta)
 
 
